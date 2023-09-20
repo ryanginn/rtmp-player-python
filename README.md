@@ -1,6 +1,6 @@
 # rtmp-player-python
 
-Tested on Python 3.10.11
+Tested on Python 3.10.11 (Windows)
 
 ## Installation Instructions
 
