@@ -6,6 +6,8 @@ from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from PIL import Image, ImageTk  # Import Pillow
+import requests
+from io import BytesIO
 
 # Create a VLC instance
 instance = vlc.Instance("--no-xlib")
@@ -57,11 +59,20 @@ def set_volume(volume):
 
 # Function to show the placeholder image
 def show_placeholder_image():
-    img = Image.open("placeholder.jpg")  # Replace with your image file
-    img = img.resize((video_canvas.winfo_width(), video_canvas.winfo_height()))
-    img = ImageTk.PhotoImage(img)
-    video_canvas.create_image(0, 0, image=img, anchor=tk.NW)
-    video_canvas.image = img  # Keep a reference to prevent garbage collection
+    try:
+        img_url = "https://cdn.discordapp.com/attachments/1022979443045707827/1157802538335227935/bctemp.png"  # Replace with the URL of your PNG image
+        response = requests.get(img_url)
+        if response.status_code == 200:
+            img_data = BytesIO(response.content)
+            img = Image.open(img_data)
+            img = img.resize((video_canvas.winfo_width(), video_canvas.winfo_height()))
+            img = ImageTk.PhotoImage(img)
+            video_canvas.create_image(0, 0, image=img, anchor=tk.NW)
+            video_canvas.image = img  # Keep a reference to prevent garbage collection
+        else:
+            print(f"Failed to retrieve image from URL: {img_url}")
+    except Exception as e:
+        print(f"Error loading image from URL: {e}")
 
 # Function to hide the placeholder image
 def hide_placeholder_image():
