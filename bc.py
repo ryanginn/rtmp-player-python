@@ -16,7 +16,8 @@ media_player = instance.media_player_new()
 streams = [
     {"url": "rtmp://rtmp-ie.one-tv.uk/stream/MPB1", "channel_name": "MPB1", "channel_number": "101"},
     {"url": "rtmp://rtmp-ie.one-tv.uk/stream/MPB2", "channel_name": "MPB2", "channel_number": "102"},
-    {"url": "http://radiozender.mpbnetwerken.nl/radio2.mp3", "channel_name": "Channel 3", "channel_number": "103"},
+    {"url": "", "channel_name": "Channel 3", "channel_number": "103"},
+    {"url": "rtmp://rtmp.90stv.nl/stream/90sTV", "channel_name": "90's TV", "channel_number": "104"}, 
 ]
 
 current_stream_index = 0
