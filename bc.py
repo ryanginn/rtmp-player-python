@@ -5,6 +5,7 @@ from tkinter import Canvas
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from PIL import Image, ImageTk  # Import Pillow
 
 # Create a VLC instance
 instance = vlc.Instance("--no-xlib")
@@ -26,11 +27,13 @@ current_stream_index = 0
 def play_pause_stream():
     if media_player.is_playing():
         media_player.pause()
+        show_placeholder_image()
     else:
         media = instance.media_new(streams[current_stream_index]["url"])
         media.get_mrl()
         media_player.set_media(media)
         media_player.play()
+        hide_placeholder_image()
 
         # Update the channel name and number labels
         channel_name_label.config(text=streams[current_stream_index]["channel_name"])
@@ -49,16 +52,20 @@ def prev_stream():
     play_pause_stream()
 
 # Function to adjust the system volume using pycaw
-def set_program_volume(volume, vlc_instance):
-    volume_level = float(volume) / 100.0
-    try:
-        sessions = AudioUtilities.GetAllSessions()
-        for session in sessions:
-            if session.Process and session.Process.name() == "vlc.exe":
-                interface = session._ctl.QueryInterface(IAudioEndpointVolume)
-                interface.SetMasterVolumeLevelScalar(volume_level, None)
-    except Exception as e:
-        print(f"Volume adjustment failed: {e}")
+def set_volume(volume):
+    media_player.audio_set_volume(volume)
+
+# Function to show the placeholder image
+def show_placeholder_image():
+    img = Image.open("placeholder.jpg")  # Replace with your image file
+    img = img.resize((video_canvas.winfo_width(), video_canvas.winfo_height()))
+    img = ImageTk.PhotoImage(img)
+    video_canvas.create_image(0, 0, image=img, anchor=tk.NW)
+    video_canvas.image = img  # Keep a reference to prevent garbage collection
+
+# Function to hide the placeholder image
+def hide_placeholder_image():
+    video_canvas.delete("all")
 
 # Create the GUI window
 root = tk.Tk()
@@ -86,7 +93,7 @@ channel_name_label = ttk.Label(root, text=streams[current_stream_index]["channel
 
 # Create a Volume control slider
 volume_label = ttk.Label(root, text="Volume:")
-volume_slider = ttk.Scale(root, from_=0, to=100, orient="horizontal", command=lambda volume: set_program_volume(volume))
+volume_slider = ttk.Scale(root, from_=0, to=100, orient="horizontal", command=lambda volume: set_volume(int(volume))
 
 # Layout the GUI elements
 play_pause_button.pack(side=tk.LEFT)
@@ -100,6 +107,9 @@ volume_label.pack(side=tk.RIGHT)
 
 # Play the initial stream
 play_pause_stream()
+
+# Display the placeholder image initially
+show_placeholder_image()
 
 # Start the GUI main loop
 root.mainloop()
