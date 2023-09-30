@@ -93,7 +93,7 @@ channel_name_label = ttk.Label(root, text=streams[current_stream_index]["channel
 
 # Create a Volume control slider
 volume_label = ttk.Label(root, text="Volume:")
-volume_slider = ttk.Scale(root, from_=0, to=100, orient="horizontal", command=lambda volume: set_volume(int(volume))
+volume_slider = ttk.Scale(root, from_=0, to=100, orient="horizontal", command=lambda volume: set_volume(int(volume)))
 
 # Layout the GUI elements
 play_pause_button.pack(side=tk.LEFT)
