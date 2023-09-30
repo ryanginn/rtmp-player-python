@@ -4,7 +4,7 @@ Tested on Python 3.10.11 (Windows)
 
 ## Installation Instructions for Windows
 
-```pip3 install python-vlc```
+```pip3 install python-vlc```<br>
 ```pip3 install comtypes```
 ```pip3 install pycaw```
 ```pip3 install pillow```
