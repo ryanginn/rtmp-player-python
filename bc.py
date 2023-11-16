@@ -17,9 +17,9 @@ media_player = instance.media_player_new()
 
 # Create a list of streams from the m3u file (you can fetch this from a URL or load from a local file)
 streams = [
-    {"url": "rtmp://rtmp-ie.one-tv.uk/stream/MPB1", "channel_name": "MPB1", "channel_number": "101"},
-    {"url": "rtmp://rtmp-ie.one-tv.uk/stream/MPB2", "channel_name": "MPB2", "channel_number": "102"},
-    {"url": "", "channel_name": "Channel 3", "channel_number": "103"},
+    {"url": "rtmp://rtmp.mpbnetwerken.nl/stream/MPB1", "channel_name": "MPB1", "channel_number": "101"},
+    {"url": "rtmp://rtmp.mpbnetwerken.nl/stream/MPB2", "channel_name": "MPB2", "channel_number": "102"},
+    {"url": "rtmp://rtmp.mpbnetwerken.nl/stream/STV21", "channel_name": "RMTV", "channel_number": "103"},
     {"url": "rtmp://rtmp.90stv.nl/stream/90sTV", "channel_name": "90's TV", "channel_number": "104"}, 
 ]
 
